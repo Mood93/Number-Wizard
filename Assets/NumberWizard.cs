@@ -9,10 +9,9 @@ public class NumberWizard : MonoBehaviour {
 	int min;
     int guess;
 
-    int maxGuessesAllowed = 8;
+    int maxGuessesAllowed = 12;
 
     public Text text;
-    public bool outOfGuesses = false;
 	
 	void Start () {
         StartGame();
@@ -36,27 +35,16 @@ public class NumberWizard : MonoBehaviour {
         max = max + 1;
     }
 
-     public void SetBool() {
-        outOfGuesses = true;
-    }
-
-
     void NextGuess ()
 	{
 
-		guess = (max + min) / 2;
-
+		guess = Random.Range(max + 1,  min);
+        text.text = guess.ToString ();  
 		maxGuessesAllowed -= 1;
 
-		if (outOfGuesses) {
-			SceneManager.LoadScene ("Win");
-		}
-
 		if (maxGuessesAllowed <= 0) {
-			//SceneManager.LoadScene("Win");
-			outOfGuesses = true;
+			SceneManager.LoadScene("Win");
 		}
-        
-		text.text = guess.ToString ();   
+		 
 	}
 }
