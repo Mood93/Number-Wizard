@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NumberWizard : MonoBehaviour {
     // Use this for initialization
@@ -11,7 +12,7 @@ public class NumberWizard : MonoBehaviour {
     int maxGuessesAllowed = 8;
 
     public Text text;
-    public bool correctGuess = true;
+    public bool outOfGuesses = false;
 	
 	void Start () {
         StartGame();
@@ -36,18 +37,26 @@ public class NumberWizard : MonoBehaviour {
     }
 
      public void SetBool() {
-        correctGuess = false;
+        outOfGuesses = true;
     }
 
 
-    void NextGuess() {
+    void NextGuess ()
+	{
 
-        guess = (max + min) / 2;
-        text.text = guess.ToString();
-        maxGuessesAllowed -= 1;
-        if (maxGuessesAllowed <= 0 && correctGuess == false) {
-            Application.LoadLevel("Win");
-        }
+		guess = (max + min) / 2;
+
+		maxGuessesAllowed -= 1;
+
+		if (outOfGuesses) {
+			SceneManager.LoadScene ("Win");
+		}
+
+		if (maxGuessesAllowed <= 0) {
+			//SceneManager.LoadScene("Win");
+			outOfGuesses = true;
+		}
         
-    }
+		text.text = guess.ToString ();   
+	}
 }
